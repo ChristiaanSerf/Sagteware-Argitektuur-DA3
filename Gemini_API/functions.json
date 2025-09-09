@@ -1,0 +1,59 @@
+[
+    {
+        "name": "save_cs2_scoreboard",
+        "description": "Saves the Counter-Strike 2 scoreboard information, including player stats and team scores.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "players": {
+                    "type": "array",
+                    "description": "List of player stat dictionaries from the scoreboard.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "player": {
+                                "type": "string",
+                                "description": "The username of the player."
+                            },
+                            "team": {
+                                "type": "string",
+                                "enum": ["CT", "T"],
+                                "description": "The team of the player: CT or T."
+                            },
+                            "Kills": {
+                                "type": "integer",
+                                "description": "Number of kills."
+                            },
+                            "Deaths": {
+                                "type": "integer",
+                                "description": "Number of deaths."
+                            },
+                            "Assists": {
+                                "type": "integer",
+                                "description": "Number of assists."
+                            },
+                            "HeadshotPerc": {
+                                "type": "integer",
+                                "description": "Headshot percentage."
+                            },
+                            "DMG": {
+                                "type": "integer",
+                                "description": "Total damage dealt."
+                            }
+                        },
+                        "required": ["player", "team", "Kills", "Deaths", "Assists", "HeadshotPerc", "DMG"]
+                    }
+                },
+                "CT_score": {
+                    "type": "integer",
+                    "description": "Score of the CT team."
+                },
+                "T_score": {
+                    "type": "integer",
+                    "description": "Score of the T team."
+                }
+            },
+            "required": ["players", "CT_score", "T_score"]
+        }
+    }
+]
