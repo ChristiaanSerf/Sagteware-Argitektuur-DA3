@@ -98,7 +98,7 @@ jobs:
       - name: Build and push Gemini Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./Gemini
+          context: ./Gemini_API
           push: true
           tags: ghcr.io/christiaanserf/sagteware-argitektuur-da3:gemini-latest
           labels: |
