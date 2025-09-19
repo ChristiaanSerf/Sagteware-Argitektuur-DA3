@@ -27,7 +27,7 @@ The system consists of 9 microservices orchestrated with Docker Compose:
 
 1. **Clone and setup**:
    ```bash
-   git clone <repo-url>
+   git clone (https://github.com/ChristiaanSerf/Sagteware-Argitektuur-DA3.git)
    cd Sagteware-Argitektuur-DA3
    cp demoenv .env
    ```
