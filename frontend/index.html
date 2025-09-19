@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8"><title>CS2 Insights PoC</title>
+<style>
+  body{font-family:Inter,Arial,Helvetica,sans-serif;padding:28px;line-height:1.45;background:#0f1115;color:#eaeaea}
+  h1{margin:0 0 16px 0}
+  section{background:#171a21;border:1px solid #2a2f3a;padding:16px;margin:16px 0;border-radius:14px}
+  input,button{font-size:14px}
+  input{margin:0 10px 0 8px;padding:6px 8px;border-radius:10px;border:1px solid #2a2f3a;background:#0f1115;color:#eaeaea}
+  button{padding:8px 12px;border-radius:10px;border:1px solid #2a2f3a;background:#0c66f0;color:white;cursor:pointer}
+  pre{background:#0b0d11;color:#d7e1ff;padding:12px;border-radius:12px;overflow:auto}
+  small{color:#9aa7bd}
+</style></head><body>
+<h1>CS2 Insights — PoC</h1>
+<small>Gateway: <code>/api</code> → match-service</small>
+
+<section>
+  <h3>Pattern (Win/Loss)</h3>
+  User ID <input id="uid" value="1"><button onclick="pattern()">Run</button>
+  <pre id="po"></pre>
+</section>
+
+<section>
+  <h3>Similar Players</h3>
+  SteamID <input id="sid" placeholder="e.g. 7656119..."><button onclick="similar()">Run</button>
+  <pre id="so"></pre>
+</section>
+
+<section>
+  <h3>Coaching Tips</h3>
+  Kills <input id="k" value="20"> Deaths <input id="d" value="22"> ADR <input id="a" value="65">
+  <button onclick="coach()">Run</button>
+  <pre id="co"></pre>
+</section>
+
+<script>
+const API = '/api';
+async function pattern(){
+  const r = await fetch(`${API}/pattern?user_id=${encodeURIComponent(uid.value)}`);
+  po.textContent = JSON.stringify(await r.json(), null, 2);
+}
+async function similar(){
+  const r = await fetch(`${API}/similar?steamid=${encodeURIComponent(sid.value)}`);
+  so.textContent = JSON.stringify(await r.json(), null, 2);
+}
+async function coach(){
+  const body = {kills:+k.value, deaths:+d.value, adr:+a.value};
+  const r = await fetch(`${API}/coach`, {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)
+  });
+  co.textContent = JSON.stringify(await r.json(), null, 2);
+}
+</script>
+</body></html>

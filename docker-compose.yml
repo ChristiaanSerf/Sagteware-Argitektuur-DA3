@@ -1,6 +1,17 @@
 version: "3.9"
 
 services:
+
+  frontend:
+    build: ./frontend
+    networks: [appnet]
+
+  nginx:
+    build: ./nginx
+    ports: ["8080:80"]
+    depends_on: [frontend, match_service]
+    networks: [appnet]
+
   db:
     image: postgres:16-alpine
     environment:
