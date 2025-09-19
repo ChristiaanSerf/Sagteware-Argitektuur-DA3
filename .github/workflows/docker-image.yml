@@ -8,6 +8,7 @@ on:
       - 'Steam_API/**'
       - 'Gemini/**'
       - 'OCR/**'
+      - 'pypelyne_service/**'
       - '**/Dockerfile'
   pull_request:
     branches: [ "main" ]
@@ -16,6 +17,7 @@ on:
       - 'Steam_API/**'
       - 'Gemini/**'
       - 'OCR/**'
+      - 'pypelyne_service/**'
       - '**/Dockerfile'
 
 jobs:
@@ -26,6 +28,7 @@ jobs:
       steam-api-changed: ${{ steps.changes.outputs.steam_api }}
       gemini-changed: ${{ steps.changes.outputs.gemini }}
       ocr-changed: ${{ steps.changes.outputs.ocr }}
+      pypelyne-changed: ${{ steps.changes.outputs.pypelyne }}
     steps:
       - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
@@ -40,6 +43,8 @@ jobs:
               - 'Gemini/**'
             ocr:
               - 'OCR/**'
+            pypelyne:
+              - 'pypelyne_service/**'
 
   build-db-api:
     needs: detect-changes
@@ -134,5 +139,29 @@ jobs:
           context: ./OCR
           push: true
           tags: ghcr.io/ruanspijkerman/nsarg_template:ocr-latest
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+
+  build-pypelyne:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.pypelyne-changed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Pypelyne Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./pypelyne_service
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/sagteware-argitektuur-da3:pypelyne-latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}

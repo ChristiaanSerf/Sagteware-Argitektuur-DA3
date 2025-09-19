@@ -7,7 +7,7 @@ services:
   nginx:
     build: ./nginx
     ports: ["8080:80"]
-    depends_on: [frontend, match_service]
+    depends_on: [frontend, match_service, pypelyne_service]
     networks: [appnet]
 
   db:
@@ -64,6 +64,11 @@ services:
       - matchdata:/data
     depends_on: [steam_api, ocr, llm]
     ports: ["5000:5000"]
+    networks: [appnet]
+
+  pypelyne_service:
+    build: ./pypelyne_service
+    ports: ["5005:5005"]
     networks: [appnet]
 
 

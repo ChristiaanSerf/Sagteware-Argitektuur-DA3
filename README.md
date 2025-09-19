@@ -8,11 +8,11 @@ This is a microservices-based Counter-Strike 2 (CS2) analysis system that allows
 
 ## Architecture
 
-The system consists of 8 microservices orchestrated with Docker Compose:
+The system consists of 9 microservices orchestrated with Docker Compose:
 
 ### Core Services
 - **Frontend** (nginx): Static web interface accessible at http://localhost:8080
-- **Nginx Proxy**: Reverse proxy routing `/api` requests to match_service
+- **Nginx Proxy**: Reverse proxy routing `/api` requests to match_service and `/pypelyne` to pypelyne_service
 - **Match Service** (port 5000): Core logic for pattern detection and player matching
 - **DB API** (port 5001): PostgreSQL database interface
 - **PostgreSQL**: Database backend for storing user and match data
@@ -21,6 +21,7 @@ The system consists of 8 microservices orchestrated with Docker Compose:
 - **Steam API** (port 5002): Integration with Steam platform for player data
 - **OCR Service** (port 5003): Extracts statistics from CS2 screenshots
 - **LLM/Gemini Service** (port 5004): AI-powered coaching tips and analysis
+- **Pypelyne Service** (port 5005): Pipeline orchestration demonstration service
 
 ## Quick Start
 
@@ -39,7 +40,7 @@ The system consists of 8 microservices orchestrated with Docker Compose:
 3. **Start the system**:
    ```bash
    # Start core services first
-   docker compose up db frontend steam_api ocr llm
+   docker compose up db frontend steam_api ocr llm pypelyne_service
    
    # In another terminal, start dependent services
    docker compose up db_api match_service
@@ -67,6 +68,11 @@ The system consists of 8 microservices orchestrated with Docker Compose:
 - Analyzes K/D ratio, ADR (Average Damage per Round), and other metrics
 - Returns actionable advice like "practice nades" or "improve survival"
 
+### ✅ Pypelyne Pipeline Demonstration
+- Demonstrates pipeline orchestration concepts with multi-step processing
+- Shows step-by-step execution tracking and result chaining
+- Provides both simple hello-world and complex multi-step pipeline examples
+
 ## Service Health Endpoints
 
 All services provide health check endpoints:
@@ -74,6 +80,14 @@ All services provide health check endpoints:
 - LLM Service: http://localhost:5004/health  
 - OCR Service: http://localhost:5003/health
 - Steam API: http://localhost:5002/health (via proxy)
+- Pypelyne Service: http://localhost:5005/health
+
+### Pypelyne API Endpoints
+
+The Pypelyne service demonstrates pipeline orchestration concepts:
+- **GET /pypelyne/hello**: Simple hello world pipeline example
+- **GET/POST /pypelyne/pipeline**: Multi-step pipeline with input processing
+- **GET /pypelyne/health**: Service health check
 
 ## Environment Configuration
 

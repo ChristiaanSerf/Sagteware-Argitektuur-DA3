@@ -31,8 +31,26 @@
   <pre id="co"></pre>
 </section>
 
+<section>
+  <h3>🚀 Pypelyne Hello World Demo</h3>
+  <p><small>Demonstrating pipeline orchestration with Pypelyne</small></p>
+  
+  <div style="margin: 10px 0;">
+    <button onclick="pypelyne_hello()">Simple Hello Pipeline</button>
+    <pre id="hello_output"></pre>
+  </div>
+  
+  <div style="margin: 10px 0;">
+    Input Text: <input id="pipeline_input" value="CS2 Analysis System" style="width: 200px;">
+    <button onclick="pypelyne_pipeline()">Multi-Step Pipeline</button>
+    <pre id="pipeline_output"></pre>
+  </div>
+</section>
+
 <script>
 const API = '/api';
+const PYPELYNE_API = '/pypelyne'; // Use nginx proxy
+
 async function pattern(){
   const r = await fetch(`${API}/pattern?user_id=${encodeURIComponent(uid.value)}`);
   po.textContent = JSON.stringify(await r.json(), null, 2);
@@ -47,6 +65,33 @@ async function coach(){
     method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body)
   });
   co.textContent = JSON.stringify(await r.json(), null, 2);
+}
+
+// Pypelyne demo functions
+async function pypelyne_hello(){
+  try {
+    const r = await fetch(`${PYPELYNE_API}/hello`);
+    const result = await r.json();
+    document.getElementById('hello_output').textContent = JSON.stringify(result, null, 2);
+  } catch (error) {
+    document.getElementById('hello_output').textContent = 'Error: ' + error.message + '\n(Note: Pypelyne service must be running on port 5005)';
+  }
+}
+
+async function pypelyne_pipeline(){
+  try {
+    const input_text = document.getElementById('pipeline_input').value;
+    const body = {input: input_text};
+    const r = await fetch(`${PYPELYNE_API}/pipeline`, {
+      method:'POST', 
+      headers:{'Content-Type':'application/json'}, 
+      body: JSON.stringify(body)
+    });
+    const result = await r.json();
+    document.getElementById('pipeline_output').textContent = JSON.stringify(result, null, 2);
+  } catch (error) {
+    document.getElementById('pipeline_output').textContent = 'Error: ' + error.message + '\n(Note: Pypelyne service must be running on port 5005)';
+  }
 }
 </script>
 </body></html>
