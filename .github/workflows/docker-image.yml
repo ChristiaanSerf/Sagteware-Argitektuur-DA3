@@ -52,7 +52,7 @@ jobs:
         with:
           context: ./DB_API
           push: true
-          tags: ghcr.io/ruanspijkerman/nsarg_template:db-api-latest
+          tags: ghcr.io/christiaanserf/sagteware-argitektuur-da3:db-api-latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
@@ -76,7 +76,7 @@ jobs:
         with:
           context: ./Steam_API
           push: true
-          tags: ghcr.io/ruanspijkerman/nsarg_template:steam-api-latest
+          tags: ghcr.io/christiaanserf/sagteware-argitektuur-da3:steam-api-latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
@@ -100,7 +100,7 @@ jobs:
         with:
           context: ./Gemini
           push: true
-          tags: ghcr.io/nsarg_template:gemini-latest
+          tags: ghcr.io/christiaanserf/sagteware-argitektuur-da3:gemini-latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
@@ -124,7 +124,7 @@ jobs:
         with:
           context: ./OCR
           push: true
-          tags: ghcr.io/ruanspijkerman/nsarg_template:ocr-latest
+          tags: ghcr.io/christiaanserf/sagteware-argitektuur-da3:ocr-latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
@@ -148,6 +148,6 @@ jobs:
         with:
           context: ./pypelyne_service
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/sagteware-argitektuur-da3:pypelyne-latest
+          tags: ghcr.io/christiaanserf/sagteware-argitektuur-da3:pypelyne-latest
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
