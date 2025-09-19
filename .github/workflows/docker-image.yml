@@ -7,34 +7,34 @@ on:
     branches: [ "main" ]
 
 jobs:
-  detect-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      db-api-changed: ${{ steps.changes.outputs.db_api }}
-      steam-api-changed: ${{ steps.changes.outputs.steam_api }}
-      gemini-changed: ${{ steps.changes.outputs.gemini }}
-      ocr-changed: ${{ steps.changes.outputs.ocr }}
-      pypelyne-changed: ${{ steps.changes.outputs.pypelyne }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            db_api:
-              - 'DB_API/**'
-            steam_api:
-              - 'Steam_API/**'
-            gemini:
-              - 'Gemini/**'
-            ocr:
-              - 'OCR/**'
-            pypelyne:
-              - 'pypelyne_service/**'
+  # detect-changes:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     db-api-changed: ${{ steps.changes.outputs.db_api }}
+  #     steam-api-changed: ${{ steps.changes.outputs.steam_api }}
+  #     gemini-changed: ${{ steps.changes.outputs.gemini }}
+  #     ocr-changed: ${{ steps.changes.outputs.ocr }}
+  #     pypelyne-changed: ${{ steps.changes.outputs.pypelyne }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: dorny/paths-filter@v2
+  #       id: changes
+  #       with:
+  #         filters: |
+  #           db_api:
+  #             - 'DB_API/**'
+  #           steam_api:
+  #             - 'Steam_API/**'
+  #           gemini:
+  #             - 'Gemini/**'
+  #           ocr:
+  #             - 'OCR/**'
+  #           pypelyne:
+  #             - 'pypelyne_service/**'
 
   build-db-api:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.db-api-changed == 'true'
+    # needs: detect-changes
+    # if: needs.detect-changes.outputs.db-api-changed == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -57,8 +57,8 @@ jobs:
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
   build-steam-api:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.steam-api-changed == 'true'
+    # needs: detect-changes
+    # if: needs.detect-changes.outputs.steam-api-changed == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -81,8 +81,8 @@ jobs:
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
   build-gemini:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.gemini-changed == 'true'
+    # needs: detect-changes
+    # if: needs.detect-changes.outputs.gemini-changed == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -105,8 +105,8 @@ jobs:
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
   build-ocr:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.ocr-changed == 'true'
+    # needs: detect-changes
+    # if: needs.detect-changes.outputs.ocr-changed == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -129,8 +129,8 @@ jobs:
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
 
   build-pypelyne:
-    needs: detect-changes
-    if: needs.detect-changes.outputs.pypelyne-changed == 'true'
+    # needs: detect-changes
+    # if: needs.detect-changes.outputs.pypelyne-changed == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
