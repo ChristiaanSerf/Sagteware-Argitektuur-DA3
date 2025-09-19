@@ -1,11 +1,62 @@
-version: '3.8'
+version: "3.9"
 
 services:
-  app:
-    # image: ghcr.io/ruanspijkerman/nsarg_template:latest
-    build: .
-    ports:
-      - "3000:3000"
+  db:
+    image: postgres:16-alpine
     environment:
-      - NODE_ENV=production
-    restart: unless-stopped
+      - POSTGRES_USER=
+      - POSTGRES_PASSWORD=
+      - POSTGRES_DB=
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+    networks: [appnet]
+
+  db_api:
+    build: ./DB_API
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=nsarg
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on: [db]
+    ports: ["5001:5000"]
+    networks: [appnet]
+
+  steam_api:
+    build: ./Steam_API
+    environment:
+      - STEAM_API_KEY=
+    ports: ["5002:5002"]
+    networks: [appnet]
+
+  ocr:
+    build: ./OCR
+    ports: ["5003:5003"]
+    networks: [appnet]
+
+  llm:
+    build: ./Gemini_API
+    environment:
+      - GEMINI_API_KEY=
+    ports: ["5004:5004"]
+    networks: [appnet]
+
+  match_service:
+    build: ./match_service
+    environment:
+      - STEAM_API_URL=http://steam_api:5002
+      - DB_API_URL=http://db_api:5000
+      - OCR_URL=http://ocr:5003
+      - LLM_URL=http://llm:5004
+    depends_on: [db_api, steam_api, ocr, llm]
+    ports: ["5000:5000"]
+    networks: [appnet]
+
+volumes:
+  dbdata:
+
+networks:
+  appnet:
+    driver: bridge

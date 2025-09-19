@@ -6,13 +6,14 @@ app = Flask(__name__)
 
 def get_db_connection():
     conn = psycopg2.connect(
-        host=os.getenv('DB_HOST', 'localhost'),
-        port=os.getenv('DB_PORT', '5432'),
+        host=os.getenv('POSTGRES_HOST', 'db'),  # service name, not localhost
+        port=os.getenv('POSTGRES_PORT', '5432'),
         user=os.getenv('POSTGRES_USER', 'postgres'),
-        password=os.getenv('POSTGRES_PASSWORD', ''),
-        database=os.getenv('DB_NAME', 'nsarg')
+        password=os.getenv('POSTGRES_PASSWORD', 'postgres'),
+        database=os.getenv('POSTGRES_DB', 'cs2')
     )
     return conn
+
 
 @app.route('/execute_sql', methods=['POST'])
 def execute_sql():
