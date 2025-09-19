@@ -46,16 +46,21 @@ services:
   match_service:
     build: ./match_service
     environment:
+      - USE_SQLITE=1
+      - SQLITE_PATH=/data/matches.db
       - STEAM_API_URL=http://steam_api:5002
-      - DB_API_URL=http://db_api:5000
       - OCR_URL=http://ocr:5003
       - LLM_URL=http://llm:5004
-    depends_on: [db_api, steam_api, ocr, llm]
+    volumes:
+      - matchdata:/data
+    depends_on: [steam_api, ocr, llm]
     ports: ["5000:5000"]
     networks: [appnet]
 
+
 volumes:
   dbdata:
+  matchdata:  
 
 networks:
   appnet:
