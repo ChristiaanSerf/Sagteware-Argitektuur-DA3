@@ -3,22 +3,8 @@ name: Docker Image CI
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'DB_API/**'
-      - 'Steam_API/**'
-      - 'Gemini/**'
-      - 'OCR/**'
-      - 'pypelyne_service/**'
-      - '**/Dockerfile'
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'DB_API/**'
-      - 'Steam_API/**'
-      - 'Gemini/**'
-      - 'OCR/**'
-      - 'pypelyne_service/**'
-      - '**/Dockerfile'
 
 jobs:
   detect-changes:
