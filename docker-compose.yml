@@ -15,9 +15,9 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      - POSTGRES_USER=
-      - POSTGRES_PASSWORD=
-      - POSTGRES_DB=
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_DB=${POSTGRES_DB:-mydatabase}
     volumes:
       - dbdata:/var/lib/postgresql/data
 
@@ -28,9 +28,9 @@ services:
     environment:
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_NAME=nsarg
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - DB_NAME=${POSTGRES_DB:-mydatabase}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
     depends_on: [db]
     ports: ["5001:5000"]
     networks: [appnet]
@@ -38,8 +38,8 @@ services:
   steam_api:
     build: ./Steam_API
     environment:
-      - STEAM_API_KEY=
-    ports: ["5002:5002"]
+      - STEAM_API_KEY=${STEAM_API_KEY:-}
+    ports: ["5002:5000"]
     networks: [appnet]
 
   ocr:
@@ -50,7 +50,7 @@ services:
   llm:
     build: ./Gemini_API
     environment:
-      - GEMINI_API_KEY=
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
     ports: ["5004:5004"]
     networks: [appnet]
 
