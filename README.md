@@ -1,3 +1,44 @@
+# Sagteware-Argitektuur-DA3
+
+Hierdie projek is 'n voorbeeld van 'n sagteware-argitektuur vir 'n CS2-analise-stelsel. Die doel is om 'n modulêre, uitbreibare stelsel te bou wat maklik in verskeie omgewings ontplooi kan word deur gebruik te maak van Docker-houers en moderne DevOps-praktyke.
+
+## Doelwitte
+
+- Vind en verstaan patrone in jou eie speletjies
+- Vind soortgelyke spelers om saam of teen te speel
+- Verbeter jou spel deur insigte en wenke
+
+## Argitektuur
+
+Die stelsel bestaan uit verskeie mikrodiens-houers, elk met 'n spesifieke funksie. Dienste kommunikeer via REST API's en word bestuur deur Docker Compose. Die argitektuur is ontwerp om maklik uitgebrei te kan word vir nuwe speletjies, kompetisies, of gevorderde statistiek.
+
+## Ontplooiing
+
+1. Maak seker Docker en Docker Compose is geïnstalleer.
+2. Kloneer die repository:
+   ```
+   git clone <repo-url>
+   ```
+3. Skep of kopieer die nodige `.env`-lêers vir elke diens.
+4. Bou die houers:
+   ```
+   docker compose build
+   ```
+5. Begin die stelsel:
+   ```
+   docker compose up
+   ```
+6. Toets die dienste deur die relevante eindpunte te besoek (bv. http://localhost:8080 vir die frontend).
+
+## Uitbreidingsmoontlikhede
+
+- Ondersteun meer as net CS2
+- Hanteer speler-georganiseerde kompetisies
+- Bied uitgebreide statistieke en aanbevelings
+
+## Kontak
+
+Vir enige vrae of bydraes, kontak die projekonderhouer.
 # CS2 Analysis System - Basic Architecture Implementation
 
 ## Overview
@@ -27,7 +68,7 @@ The system consists of 9 microservices orchestrated with Docker Compose:
 
 1. **Clone and setup**:
    ```bash
-   git clone (https://github.com/ChristiaanSerf/Sagteware-Argitektuur-DA3.git)
+   git clone <repo-url>
    cd Sagteware-Argitektuur-DA3
    cp demoenv .env
    ```
